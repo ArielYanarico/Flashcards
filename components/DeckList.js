@@ -16,7 +16,7 @@ class DeckList extends Component {
       <View style={styles.container}>
         {decks.map((deck) => (
           <View key={deck} style={styles.deck}>
-            <Text>{deck}</Text>
+            <Text style={{color: white, textAlign: 'center'}}>{deck}</Text>
           </View>
         ))}
         <Text>Ups, it looks like you dont have any deck!</Text>
@@ -33,8 +33,6 @@ const styles = StyleSheet.create({
   },
   deck: {
     backgroundColor: lightblue,
-    color: white,
-    textAlign: center,
     alignItems: 'stretch',
     justifyContent: 'center',
     borderRadius: 8,

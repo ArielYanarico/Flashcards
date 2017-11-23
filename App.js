@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, StatusBar, View } from 'react-native';
+import { StatusBar, View, Platform } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { Constants } from 'expo';
 import thunk from 'redux-thunk';
-import { white, blue } from './utils/colors';
+import { white, lightblue } from './utils/colors';
 import reducer from './reducers';
 import DeckList from './components/DeckList';
 import AddDeck from './components/AddDeck';
@@ -28,9 +28,19 @@ const Tabs = TabNavigator({
   navigationOptions: {
     header: null
   },
-  animationEnabled: true,
   tabBarOptions: {
-    activeTintColor: white,
+    activeTintColor: Platform.OS === 'ios' ? lightblue : white,
+    style: {
+      height: 56,
+      backgroundColor: Platform.OS === 'ios' ? white : lightblue,
+      shadowColor: 'rgba(0, 0, 0, 0.24)',
+      shadowOffset: {
+        width: 0,
+        height: 3
+      },
+      shadowRadius: 6,
+      shadowOpacity: 1
+    }
   }
 })
 
@@ -51,8 +61,8 @@ class App extends Component {
     return (
       <Provider store={createStore(reducer, applyMiddleware(thunk))}>
         <View style={{flex: 1}}>
-          <View style={{backgroundColor: blue, height: Constants.statusBarHeight}}>
-            <StatusBar translucent backgroundColor={blue} barStyle="light-content" />
+          <View style={{backgroundColor: lightblue, height: Constants.statusBarHeight}}>
+            <StatusBar translucent backgroundColor={lightblue} barStyle="light-content" />
           </View>
           <Navigator/>
         </View>

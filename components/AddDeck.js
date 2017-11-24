@@ -1,22 +1,38 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, Platform, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
 import { white, lightblue } from '../utils/colors';
+import * as deckActions from '../actions/deck';
 
 class AddDeck extends Component {
 
   state = { 
-    text: 'Placeholder'
+    text: ''
+  }
+
+  submit = () => {
+    const { text } = this.state;
+    const { addDeck } = this.props;
+
+    addDeck({
+      deck1: 30
+    });
   }
 
   render() {
+
     return (
       <View style={styles.container}>
         <Text>Click Here To Add Some Decks</Text> 
         <TextInput
-          style={styles.textInput}
           onChangeText={(text) => this.setState({text})}
-          value={this.state.text}
+          placeholder='Deck Name'
         />
+        <TouchableOpacity
+          style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn}
+          onPress={this.submit}>
+            <Text style={styles.submitBtnText} autoCapitalize='characters'>submit</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -28,11 +44,37 @@ const styles = StyleSheet.create({
     padding: 5,
     backgroundColor: white
   },
-  textInput: {
-    height: 50, 
-    //borderColor: lightblue, 
-    borderWidth: 1
+    iosSubmitBtn: {
+    backgroundColor: lightblue,
+    padding: 10,
+    borderRadius: 7,
+    height: 45,
+    marginLeft: 40,
+    marginRight: 40
+
+  },
+  androidSubmitBtn: {
+    backgroundColor: lightblue,
+    padding: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+    borderRadius: 2,
+    height: 45,
+    alignSelf: 'flex-end',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  submitBtnText: {
+    color: white,
+    fontSize: 22,
+    textAlign: 'center'
   }
 });
 
-export default AddDeck;
+const mapStateToProps = ({ decks }) => {
+  return {
+    decks
+  };
+};
+
+export default connect(mapStateToProps, deckActions)(AddDeck);

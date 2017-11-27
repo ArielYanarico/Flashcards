@@ -6,7 +6,7 @@ export function decks(state = [], action) {
       return action.decks;
 
     case ADD_DECK:
-      return [];
+      return [...state, action.deck];
 
     default:
       return state;

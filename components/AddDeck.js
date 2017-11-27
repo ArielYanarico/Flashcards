@@ -6,7 +6,7 @@ import * as deckActions from '../actions/deck';
 
 class AddDeck extends Component {
 
-  state = { 
+  state = {
     text: ''
   }
 
@@ -14,16 +14,14 @@ class AddDeck extends Component {
     const { text } = this.state;
     const { addDeck } = this.props;
 
-    addDeck({
-      deck1: 30
-    });
+    addDeck(this.state.text);
   }
 
   render() {
 
     return (
       <View style={styles.container}>
-        <Text>Click Here To Add Some Decks</Text> 
+        <Text>Click Here To Add Some Decks</Text>
         <TextInput
           onChangeText={(text) => this.setState({text})}
           placeholder='Deck Name'

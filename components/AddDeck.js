@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Platform, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
 import { white, lightblue } from '../utils/colors';
 import * as deckActions from '../actions/deck';
 
@@ -12,19 +13,23 @@ class AddDeck extends Component {
 
   submit = () => {
     const { text } = this.state;
-    const { addDeck } = this.props;
+    const { addDeck, navigation } = this.props;
 
-    addDeck(this.state.text);
+    addDeck(text);
+    this.setState({text: ''});
+    navigation.dispatch(NavigationActions.back({key: 'AddDeck'}));
   }
 
   render() {
+    const { text } = this.state;
 
     return (
       <View style={styles.container}>
-        <Text>Click Here To Add Some Decks</Text>
         <TextInput
+          style={styles.textInput}
           onChangeText={(text) => this.setState({text})}
           placeholder='Deck Name'
+          value={text}
         />
         <TouchableOpacity
           style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn}
@@ -42,7 +47,11 @@ const styles = StyleSheet.create({
     padding: 5,
     backgroundColor: white
   },
-    iosSubmitBtn: {
+  textInput: {
+    height: 45,
+    padding: 10
+  },
+  iosSubmitBtn: {
     backgroundColor: lightblue,
     padding: 10,
     borderRadius: 7,

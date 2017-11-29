@@ -1,7 +1,6 @@
 import asyncStore from 'react-native-simple-store';
 export const RECEIVE_DECKS = 'RECEIVE_DECKS';
 export const ADD_DECK = 'ADD_DECK';
-
 export const DECKS = 'decks';
 
 function getDecksAction(decks) {
@@ -27,7 +26,7 @@ export function getDecks() {
 
 export function addDeck(deck) {
   return async (dispatch) => {
-    await asyncStore.push(DECKS, deck)
+    await asyncStore.push(DECKS, deck);
     dispatch(addDeckAction(deck));
   }
 }

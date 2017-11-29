@@ -1,12 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { lightblue, white } from '../utils/colors';
 
-const ListItem = ({ title }) => {
+const ListItem = ({ title, onTouch }) => {
   return (
-    <View style={styles.item}>
+    <TouchableOpacity style={styles.item} onPress={onTouch.bind(this, title)}>
       <Text style={{color: white, textAlign: 'center'}}>{title}</Text>
-    </View>
+    </TouchableOpacity>
   );
 }
 

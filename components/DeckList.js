@@ -22,6 +22,7 @@ class DeckList extends Component {
   render() {
     const { decks } = this.props;
     const renderDecks = decks.map(deck => ({deck}));
+    console.log(decks.length)
 
     return (
       <View style={styles.container}>

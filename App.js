@@ -9,6 +9,7 @@ import { white, lightblue } from './utils/colors';
 import reducer from './reducers';
 import DeckList from './components/DeckList';
 import AddDeck from './components/AddDeck';
+import AddCard from './components/AddCard';
 import Deck from './components/Deck';
 
 const Tabs = TabNavigator({
@@ -50,6 +51,15 @@ const Navigator = StackNavigator({
   },
   Deck: {
     screen: Deck,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: lightblue,
+      }
+    }
+  },
+  AddCard: {
+    screen: AddCard,
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {

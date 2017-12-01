@@ -1,13 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, Platform } from 'react-native';
 import { lightblue, white } from '../utils/colors';
 
-const SubmitBtn = ({ onSubmit }) => {
+const ActionBtn = ({ onSubmit, text }) => {
   return (
     <TouchableOpacity
       style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn}
       onPress={onSubmit}>
-        <Text style={styles.submitBtnText} autoCapitalize='characters'>submit</Text>
+        <Text style={styles.submitBtnText} autoCapitalize='characters'>{text}</Text>
     </TouchableOpacity>
   );
 }
@@ -40,4 +40,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SubmitBtn;
+export default ActionBtn;

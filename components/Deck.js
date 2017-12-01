@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationActions } from 'react-navigation';
+import ActionBtn from './ActionBtn';
 
 class Deck extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -7,10 +9,23 @@ class Deck extends Component {
     return { title }
   }
 
+  addNewCard = () => {
+    const { navigation } = this.props;
+    navigation.dispatch(NavigationActions.navigate({routeName: 'AddCard'}));
+  }
+
+  startNewQuiz = () => {
+  }
+
   render() {
+    const { navigation } = this.props;
+    const { title } = navigation.state.params;
+
     return (
       <View style={styles.container}>
-        <Text>Hey i am a Deck</Text>
+        <Text>{title}</Text>
+        <ActionBtn onSubmit={this.addNewCard} text='Add Card'/>
+        <ActionBtn onSubmit={this.startNewQuiz} text='Start Quiz'/>
       </View>
     );
   }

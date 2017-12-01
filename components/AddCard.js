@@ -4,21 +4,20 @@ import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import ActionBtn from './ActionBtn';
 import { white, lightblue } from '../utils/colors';
-import * as deckActions from '../actions/deck';
+import * as deckActions from '../actions/question';
 
-class AddDeck extends Component {
+class AddCard extends Component {
 
   state = {
     text: ''
   }
 
-  addNewDeck = () => {
+  addNewQuestion = () => {
     const { text } = this.state;
-    const { addDeck, navigation } = this.props;
-
-    addDeck(text);
+    const { navigation } = this.props;
+    addQuestion(text);
     this.setState({text: ''});
-    navigation.dispatch(NavigationActions.back({key: 'AddDeck'}));
+    navigation.dispatch(NavigationActions.back({key: 'AddCard'}));
   }
 
   render() {
@@ -29,7 +28,7 @@ class AddDeck extends Component {
         <TextInput
           style={styles.textInput}
           onChangeText={(text) => this.setState({text})}
-          placeholder='Deck Name'
+          placeholder='Question'
           value={text}
         />
         <ActionBtn onSubmit={this.addNewDeck} text='Submit'/>
@@ -50,10 +49,10 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ decks }) => {
+const mapStateToProps = ({ questions }) => {
   return {
-    decks
+    questions
   };
 };
 
-export default connect(mapStateToProps, deckActions)(AddDeck);
+export default connect(mapStateToProps, deckActions)(AddCard);

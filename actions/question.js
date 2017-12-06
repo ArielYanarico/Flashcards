@@ -17,16 +17,17 @@ function addQuestionAction(question) {
   }
 }
 
-export function getQuestions(deck) {
+export function getQuestions() {
   return async (dispatch) => {
     const gottenQuestions = await asyncStore.get(QUESTIONS);
-    gottenQuestions 
-      ? dispatch(getQuestionsAction(gottenQuestions.filter(q => q.deck === deck))) 
+    gottenQuestions
+      ? dispatch(getQuestionsAction(gottenQuestions))
       : dispatch(getQuestionsAction([]));
   }
 }
 
 export function addQuestion(question) {
+  console.log('middleware', question);
   return async (dispatch) => {
     await asyncStore.push(QUESTIONS, question);
     dispatch(addQuestionAction(question));

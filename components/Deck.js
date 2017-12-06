@@ -11,10 +11,18 @@ class Deck extends Component {
 
   addNewCard = () => {
     const { navigation } = this.props;
-    navigation.dispatch(NavigationActions.navigate({routeName: 'AddCard'}));
+    navigation.dispatch(NavigationActions.navigate({
+      routeName: 'AddCard',
+      params: {deck: navigation.state.params.title}
+    }));
   }
 
   startNewQuiz = () => {
+    const { navigation } = this.props;
+    navigation.dispatch(NavigationActions.navigate({
+      routeName: 'Quiz',
+      params: {cards: navigation.state.params.cards}
+    }));
   }
 
   render() {

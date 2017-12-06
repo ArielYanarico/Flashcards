@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
     height: 35,
     marginLeft: 40,
     marginRight: 40
-
   },
   androidSubmitBtn: {
     backgroundColor: lightblue,
@@ -29,9 +28,7 @@ const styles = StyleSheet.create({
     paddingRight: 30,
     borderRadius: 2,
     height: 35,
-    alignSelf: 'flex-end',
-    justifyContent: 'center',
-    alignItems: 'center'
+    marginTop: 12
   },
   submitBtnText: {
     color: white,

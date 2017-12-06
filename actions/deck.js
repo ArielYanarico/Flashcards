@@ -20,7 +20,9 @@ function addDeckAction(deck) {
 export function getDecks() {
   return async (dispatch) => {
     const gottenDecks = await asyncStore.get(DECKS);
-    gottenDecks ? dispatch(getDecksAction(gottenDecks)) : dispatch(getDecksAction([]));
+    gottenDecks
+      ? dispatch(getDecksAction(gottenDecks))
+      : dispatch(getDecksAction([]));
   }
 }
 

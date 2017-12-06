@@ -11,6 +11,7 @@ import DeckList from './components/DeckList';
 import AddDeck from './components/AddDeck';
 import AddCard from './components/AddCard';
 import Deck from './components/Deck';
+import Quiz from './components/Quiz';
 
 const Tabs = TabNavigator({
   DeckList: {
@@ -45,26 +46,33 @@ const Tabs = TabNavigator({
   }
 })
 
+const HeaderStyle = {
+  headerTintColor: white,
+  headerStyle: {
+    backgroundColor: lightblue,
+  }
+};
+
 const Navigator = StackNavigator({
   Home: {
     screen: Tabs
   },
   Deck: {
     screen: Deck,
-    navigationOptions: {
-      headerTintColor: white,
-      headerStyle: {
-        backgroundColor: lightblue,
-      }
-    }
+    navigationOptions: HeaderStyle
   },
   AddCard: {
     screen: AddCard,
     navigationOptions: {
-      headerTintColor: white,
-      headerStyle: {
-        backgroundColor: lightblue,
-      }
+      title: 'Add Card',
+      ...HeaderStyle
+    }
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: {
+      title: 'Quiz',
+      ...HeaderStyle
     }
   }
 })

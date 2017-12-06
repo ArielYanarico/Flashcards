@@ -2,10 +2,11 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { lightblue, white } from '../utils/colors';
 
-const ListItem = ({ title, onTouch }) => {
+const DeckItem = ({ title, cardNumber, onTouch }) => {
   return (
     <TouchableOpacity style={styles.item} onPress={onTouch.bind(this, title)}>
       <Text style={{color: white, textAlign: 'center'}}>{title}</Text>
+      <Text style={{color: white, textAlign: 'center'}}>Cards {cardNumber}</Text>
     </TouchableOpacity>
   );
 }
@@ -21,4 +22,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ListItem;
+export default DeckItem;

@@ -9,7 +9,8 @@ class Quiz extends Component {
   state = {
     index: 0,
     isFlipped: false,
-    score: 0
+    score: 0,
+    currentAnswer: null
   }
 
   flip = () => {
@@ -28,21 +29,29 @@ class Quiz extends Component {
 
     if (isCorrect)
       this.setState({score: score + 1});
+
+    this.setState({currentAnswer: null});
   }
 
   getRandomAnswer(answer, answers) {
+    //const { currentAnswer } = this.state;
+    console.log('answer:', answer);
     const randomAnswer = answers[Math.floor(Math.random()*answers.length)];
-    return answer === randomAnswer
+
+    const random = answer === randomAnswer
       ? answer
       : [answer, randomAnswer][Math.floor(Math.random()*2)]
+
+    console.log('random:', random);
+    this.setState({currentAnswer: random});
   }
 
   render() {
-    const { index, isFlipped } = this.state;
+    const { index, isFlipped, currentAnswer } = this.state;
     const { cards } = this.props.navigation.state.params;
 
-    displayedAns = this.getRandomAnswer(cards[index].answer, cards.map(card => card.answer));
-    console.log(displayedAns);
+    currentAnswer || this.getRandomAnswer(cards[index].answer, cards.map(card => card.answer));
+    console.log('currentAnswer:', currentAnswer);
 
     return (
       <View style={styles.container}>

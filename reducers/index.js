@@ -1,8 +1,8 @@
 import { decks } from './deck';
-import { questions } from './question';
+import { cards } from './card';
 import { combineReducers } from 'redux';
 
 export default combineReducers({
     decks,
-    questions
+    cards
 });

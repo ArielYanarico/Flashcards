@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import ActionBtn from './ActionBtn';
 import { white, lightblue } from '../utils/colors';
-import * as deckActions from '../actions/question';
+import * as deckActions from '../actions/card';
 
 class AddCard extends Component {
   state = {
@@ -12,10 +12,10 @@ class AddCard extends Component {
     answer: ''
   }
 
-  addNewQuestion = () => {
-    const { navigation, addQuestion } = this.props;
+  addNewCard = () => {
+    const { navigation, addCard } = this.props;
     const { deck } = navigation.state.params;
-    addQuestion({...this.state, deck});
+    addCard({...this.state, deck});
     this.setState({question: '', answer: ''});
     navigation.dispatch(NavigationActions.navigate({
       routeName: 'Deck',
@@ -40,7 +40,7 @@ class AddCard extends Component {
           placeholder='Answer'
           value={answer}
         />
-        <ActionBtn onSubmit={this.addNewQuestion} text='Submit'/>
+        <ActionBtn onSubmit={this.addNewCard} text='Submit'/>
       </View>
     );
   }
@@ -58,9 +58,9 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ questions }) => {
+const mapStateToProps = ({ cards }) => {
   return {
-    questions
+    cards
   };
 };
 

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, Platform, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import ActionBtn from './ActionBtn';
-import { white, lightblue } from '../utils/colors';
+import { white, lightblue, gray } from '../utils/colors';
 import * as deckActions from '../actions/deck';
 
 class AddDeck extends Component {
@@ -26,10 +26,11 @@ class AddDeck extends Component {
 
     return (
       <View style={styles.container}>
+        <Text style={styles.addDeckText}>What is the title of your new deck?</Text>
         <TextInput
           style={styles.textInput}
           onChangeText={(text) => this.setState({text})}
-          placeholder='Deck Name'
+          placeholder='Deck Title'
           value={text}
         />
         <ActionBtn onSubmit={this.addNewDeck} text='Submit'/>
@@ -42,11 +43,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 5,
-    backgroundColor: white
+    backgroundColor: white,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   textInput: {
     height: 45,
-    padding: 10
+    padding: 10,
+    width: '80%'
+  },
+  addDeckText: {
+    fontSize: 38,
+    textAlign: 'center',
+    color: gray
   }
 });
 

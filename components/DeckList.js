@@ -3,28 +3,29 @@ import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import * as deckActions from '../actions/deck';
-import * as questionActions from '../actions/question';
-import { white, lightblue } from '../utils/colors';
+import * as cardActions from '../actions/card';
+import { white, lightblue, gray } from '../utils/colors';
 import DeckItem from './DeckItem';
 
 class DeckList extends Component {
   componentWillMount() {
     this.props.getDecks();
-    this.props.getQuestions();
+    this.props.getCards();
   }
 
-  openDeck = (title) => {
-    const { navigation, questions } = this.props;
+  openDeck = (title, numberOfCards) => {
+    const { navigation, cards } = this.props;
     navigation.dispatch(NavigationActions.navigate({
       routeName: 'Deck',
       params: {
         title,
-        cards: questions.filter(card => card.deck === title)}
+        numberOfCards
+      }
     }));
   }
 
   render() {
-    const { decks, questions } = this.props;
+    const { decks, cards } = this.props;
     const renderDecks = decks.map(deck => ({deck}));
 
     return (
@@ -37,11 +38,13 @@ class DeckList extends Component {
               <DeckItem
                 title={item.deck}
                 onTouch={this.openDeck}
-                cardNumber={questions.filter(card => card.deck === item.deck).length}
+                numberOfCards={cards.filter(card => card.deck === item.deck).length}
               />}
             />
           : <View style={styles.container}>
-              <Text>Ups, it looks like you dont have any deck yet!</Text>
+              <View style={styles.noDecks}>
+                <Text style={styles.noDecksText}>Ups, it looks like you dont have any deck yet!</Text>
+              </View>
             </View>}
       </View>
     );
@@ -53,14 +56,24 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 5,
     backgroundColor: white
+  },
+  noDecks: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  noDecksText: {
+    fontSize: 38,
+    textAlign: 'center',
+    color: gray
   }
 });
 
-const mapStateToProps = ({ decks, questions }) => {
+const mapStateToProps = ({ decks, cards }) => {
   return {
     decks,
-    questions
+    cards
   };
 };
 
-export default connect(mapStateToProps, {...deckActions, ...questionActions})(DeckList);
+export default connect(mapStateToProps, {...deckActions, ...cardActions})(DeckList);

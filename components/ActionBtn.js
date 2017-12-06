@@ -2,11 +2,12 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, Platform } from 'react-native';
 import { lightblue, white } from '../utils/colors';
 
-const ActionBtn = ({ onSubmit, text }) => {
+const ActionBtn = ({ onSubmit, text, disabled = false }) => {
   return (
     <TouchableOpacity
       style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn}
-      onPress={onSubmit}>
+      onPress={onSubmit}
+      disabled={disabled}>
         <Text style={styles.submitBtnText} autoCapitalize='characters'>{text}</Text>
     </TouchableOpacity>
   );

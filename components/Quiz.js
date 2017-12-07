@@ -3,7 +3,7 @@ import { StyleSheet, Platform, Text, View, TouchableOpacity } from 'react-native
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import ActionBtn from './ActionBtn';
-import { white, lightblue } from '../utils/colors';
+import { white, red, green, blue, lightblue } from '../utils/colors';
 import Card from './Card';
 
 class Quiz extends Component {
@@ -53,7 +53,8 @@ class Quiz extends Component {
 
     return (displayResult
       ? (<View style={styles.container}>
-          <Text>Congratulations, you have finished, your score is: {score}/{cards.length}</Text>
+          <Text style={styles.resultText}>Congratulations, you have finished, your score is:</Text>
+          <Text style={styles.resultTextScore}>{score}/{cards.length}</Text>
         </View>)
       : (<View style={styles.container}>
           <Text>{index + 1}/{cards.length}</Text>
@@ -68,8 +69,16 @@ class Quiz extends Component {
                 onAction={this.flip}/>
           }
           <View style={styles.btnContainer}>
-            <ActionBtn onSubmit={this.submitAnswer.bind(this, cards[index].answer === currentAnswer)} text=' Correct '/>
-            <ActionBtn onSubmit={this.submitAnswer.bind(this, cards[index].answer !== currentAnswer)} text='Incorrect'/>
+            <ActionBtn 
+              onSubmit={this.submitAnswer.bind(this, cards[index].answer === currentAnswer)} 
+              text=' Correct '
+              color={green}
+            />
+            <ActionBtn 
+              onSubmit={this.submitAnswer.bind(this, cards[index].answer !== currentAnswer)} 
+              text='Incorrect'
+              color={red}
+            />
           </View>
         </View>
       )
@@ -84,9 +93,20 @@ const styles = StyleSheet.create({
     backgroundColor: white
   },
   btnContainer: {
-    flex: 2,
-    justifyContent: 'center',
+    flex: .5,
+    justifyContent: 'flex-start',
     alignItems: 'center'
+  },
+  resultText: {
+    fontSize: 20,
+    textAlign: 'center',
+    color: lightblue,
+    padding: 30
+  },
+  resultTextScore: {
+    fontSize: 30,
+    textAlign: 'center',
+    color: blue
   }
 });
 

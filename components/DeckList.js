@@ -59,12 +59,13 @@ const styles = StyleSheet.create({
   },
   noDecks: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center'
   },
   noDecksText: {
-    fontSize: 38,
+    fontSize: 40,
     textAlign: 'center',
+    padding: 30,
     color: gray
   }
 });

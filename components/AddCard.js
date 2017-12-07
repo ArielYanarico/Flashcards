@@ -40,7 +40,9 @@ class AddCard extends Component {
           placeholder='Answer'
           value={answer}
         />
-        <ActionBtn onSubmit={this.addNewCard} text='Submit'/>
+        <View style={styles.btnContainer}>
+          <ActionBtn onSubmit={this.addNewCard} text='Submit'/>
+        </View>
       </View>
     );
   }
@@ -50,11 +52,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 5,
-    backgroundColor: white
+    backgroundColor: white,
+  },
+  btnContainer: {
+    alignSelf: 'center',
+    marginTop:20
   },
   textInput: {
     height: 45,
-    padding: 10
+    padding: 5,
+    marginTop:20
   }
 });
 

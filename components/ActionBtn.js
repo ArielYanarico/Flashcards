@@ -2,10 +2,13 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, Platform } from 'react-native';
 import { lightblue, white } from '../utils/colors';
 
-const ActionBtn = ({ onSubmit, text, disabled = false }) => {
+const ActionBtn = ({ onSubmit, text, disabled = false, color = lightblue}) => {
   return (
     <TouchableOpacity
-      style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn}
+      style={Platform.OS === 'ios' 
+        ? [styles.iosSubmitBtn, {backgroundColor: color}] 
+        : [styles.androidSubmitBtn, {backgroundColor: color}]
+      }
       onPress={onSubmit}
       disabled={disabled}>
         <Text style={styles.submitBtnText} autoCapitalize='characters'>{text}</Text>
@@ -15,7 +18,6 @@ const ActionBtn = ({ onSubmit, text, disabled = false }) => {
 
 const styles = StyleSheet.create({
   iosSubmitBtn: {
-    backgroundColor: lightblue,
     padding: 10,
     borderRadius: 7,
     height: 35,
@@ -23,7 +25,6 @@ const styles = StyleSheet.create({
     marginRight: 40
   },
   androidSubmitBtn: {
-    backgroundColor: lightblue,
     padding: 10,
     paddingLeft: 30,
     paddingRight: 30,

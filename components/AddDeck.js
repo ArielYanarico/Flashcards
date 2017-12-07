@@ -44,18 +44,21 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 5,
     backgroundColor: white,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center'
   },
   textInput: {
     height: 45,
-    padding: 10,
-    width: '80%'
+    width: '80%',
+    padding: 5,
+    marginBottom: 20
   },
   addDeckText: {
-    fontSize: 38,
+    fontSize: 40,
     textAlign: 'center',
-    color: gray
+    color: gray,
+    padding: 30,
+    paddingBottom: 20
   }
 });
 

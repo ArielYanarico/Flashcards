@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import ActionBtn from './ActionBtn';
+import { white, gray, lightblue, blue } from '../utils/colors';
 
 class Deck extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -30,10 +31,20 @@ class Deck extends Component {
 
     return (
       <View style={styles.container}>
-        <Text>{title}</Text>
-        <Text>{numberOfCards}</Text>
-        <ActionBtn onSubmit={this.addNewCard} text='Add Card'/>
-        <ActionBtn onSubmit={this.startNewQuiz} text='Start Quiz' disabled={numberOfCards < 1}/>
+        <Text style={styles.titleText}>{title}</Text>
+        <Text style={styles.numberText}>{numberOfCards} cards</Text>
+        <View style={styles.btnContainer}>
+          <ActionBtn 
+            onSubmit={this.addNewCard} 
+            text='Add Card'
+          />
+          <ActionBtn 
+            onSubmit={this.startNewQuiz} 
+            text='Start Quiz' 
+            disabled={numberOfCards < 1}
+            color={blue}
+          />
+        </View>
       </View>
     );
   }
@@ -42,9 +53,23 @@ class Deck extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: white,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  btnContainer: {
+    flex: .5,
+    justifyContent: 'flex-end'
+  },
+  titleText: {
+    color: blue, 
+    textAlign: 'center',
+    fontSize: 40
+  },
+  numberText: {
+    color: gray, 
+    textAlign: 'center',
+    fontSize: 30
   }
 });
 

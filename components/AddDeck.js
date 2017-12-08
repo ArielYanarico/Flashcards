@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import ActionBtn from './ActionBtn';
-import { white, lightblue, gray } from '../utils/colors';
+import { white, lightblue, gray, red } from '../utils/colors';
 import * as deckActions from '../actions/deck';
 
 class AddDeck extends Component {
 
   state = {
-    text: ''
+    text: '',
+    empty: false
   }
 
   addNewDeck = () => {
@@ -18,14 +19,24 @@ class AddDeck extends Component {
 
     addDeck(text);
     this.setState({text: ''});
-    navigation.dispatch(NavigationActions.back({key: 'AddDeck'}));
+    navigation.dispatch(NavigationActions.navigate({
+      routeName: 'Deck',
+      params: {
+        text,
+        numberOfCards: 0
+      }
+    }));
   }
 
   render() {
-    const { text } = this.state;
+    const { text, empty } = this.state;
 
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView
+        behavior='position'
+        style={styles.container}
+        contentContainerStyle={styles.container}
+      >
         <Text style={styles.addDeckText}>What is the title of your new deck?</Text>
         <TextInput
           style={styles.textInput}
@@ -33,8 +44,12 @@ class AddDeck extends Component {
           placeholder='Deck Title'
           value={text}
         />
-        <ActionBtn onSubmit={this.addNewDeck} text='Submit'/>
-      </View>
+        {empty && <Text style={styles.empty}>Deck title should not be empty!</Text>}
+        <ActionBtn
+          onSubmit={text ? this.addNewDeck : () => this.setState({empty: true})}
+          text='Submit'
+        />
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -49,7 +64,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     height: 45,
-    width: '80%',
+    alignSelf: 'stretch',
     padding: 5,
     marginBottom: 20
   },
@@ -59,6 +74,10 @@ const styles = StyleSheet.create({
     color: gray,
     padding: 30,
     paddingBottom: 20
+  },
+  empty:{
+    color: red,
+    textAlign: 'center'
   }
 });
 

@@ -25,11 +25,26 @@ class Quiz extends Component {
     this.setState({isFlipped: !this.state.isFlipped});
   }
 
+  finish = () => {
+    const { navigation } = this.props;
+    navigation.dispatch(NavigationActions.navigate({routeName: 'DeckList'}));
+  }
+
+  restart = () => {
+    this.setState({
+      index: 0,
+      isFlipped: false,
+      score: 0,
+      currentAnswer: null,
+      displayResult: false
+    });
+  }
+
   submitAnswer = (isCorrect) => {
     const { index, score } = this.state;
     const { cards } = this.props;
 
-    index < cards.length - 1 
+    index < cards.length - 1
       ? this.setState({index: index + 1, isFlipped: false})
       : this.setState({displayResult: true})
 
@@ -55,6 +70,16 @@ class Quiz extends Component {
       ? (<View style={styles.container}>
           <Text style={styles.resultText}>Congratulations, you have finished, your score is:</Text>
           <Text style={styles.resultTextScore}>{score}/{cards.length}</Text>
+          <View style={styles.btnContainer}>
+            <ActionBtn
+              onSubmit={this.restart}
+              text='  Restart  '
+            />
+            <ActionBtn
+              onSubmit={this.finish}
+              text='Finish Quiz'
+            />
+          </View>
         </View>)
       : (<View style={styles.container}>
           <Text>{index + 1}/{cards.length}</Text>
@@ -69,13 +94,13 @@ class Quiz extends Component {
                 onAction={this.flip}/>
           }
           <View style={styles.btnContainer}>
-            <ActionBtn 
-              onSubmit={this.submitAnswer.bind(this, cards[index].answer === currentAnswer)} 
+            <ActionBtn
+              onSubmit={this.submitAnswer.bind(this, cards[index].answer === currentAnswer)}
               text=' Correct '
               color={green}
             />
-            <ActionBtn 
-              onSubmit={this.submitAnswer.bind(this, cards[index].answer !== currentAnswer)} 
+            <ActionBtn
+              onSubmit={this.submitAnswer.bind(this, cards[index].answer !== currentAnswer)}
               text='Incorrect'
               color={red}
             />
@@ -94,7 +119,7 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     flex: .5,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center'
   },
   resultText: {

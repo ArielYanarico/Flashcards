@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { Constants } from 'expo';
 import thunk from 'redux-thunk';
 import { white, lightblue } from './utils/colors';
+import { setLocalNotification } from './utils/notification';
 import reducer from './reducers';
 import DeckList from './components/DeckList';
 import AddDeck from './components/AddDeck';
@@ -78,6 +79,10 @@ const Navigator = StackNavigator({
 })
 
 class App extends Component {
+  componentDidMount() {
+    setLocalNotification();
+  }
+
   render() {
     return (
       <Provider store={createStore(reducer, applyMiddleware(thunk))}>

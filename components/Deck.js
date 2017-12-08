@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import ActionBtn from './ActionBtn';
 import { white, gray, lightblue, blue } from '../utils/colors';
+import { clearLocalNotification, setLocalNotification } from '../utils/notification'
 
 class Deck extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -23,6 +24,8 @@ class Deck extends Component {
     navigation.dispatch(NavigationActions.navigate({
       routeName: 'Quiz'
     }));
+    clearLocalNotification()
+      .then(setLocalNotification)
   }
 
   render() {
@@ -34,13 +37,13 @@ class Deck extends Component {
         <Text style={styles.titleText}>{title}</Text>
         <Text style={styles.numberText}>{numberOfCards} cards</Text>
         <View style={styles.btnContainer}>
-          <ActionBtn 
-            onSubmit={this.addNewCard} 
+          <ActionBtn
+            onSubmit={this.addNewCard}
             text='Add Card'
           />
-          <ActionBtn 
-            onSubmit={this.startNewQuiz} 
-            text='Start Quiz' 
+          <ActionBtn
+            onSubmit={this.startNewQuiz}
+            text='Start Quiz'
             disabled={numberOfCards < 1}
             color={blue}
           />
@@ -62,12 +65,12 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end'
   },
   titleText: {
-    color: blue, 
+    color: blue,
     textAlign: 'center',
     fontSize: 40
   },
   numberText: {
-    color: gray, 
+    color: gray,
     textAlign: 'center',
     fontSize: 30
   }

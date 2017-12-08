@@ -22,7 +22,8 @@ class Deck extends Component {
   startNewQuiz = () => {
     const { navigation } = this.props;
     navigation.dispatch(NavigationActions.navigate({
-      routeName: 'Quiz'
+      routeName: 'Quiz',
+      params: {deck: navigation.state.params.title}
     }));
     clearLocalNotification()
       .then(setLocalNotification)

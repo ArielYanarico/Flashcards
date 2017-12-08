@@ -22,7 +22,7 @@ class AddCard extends Component {
       routeName: 'Deck',
       params: {
         title: deck,
-        numberOfCards: cards.length
+        numberOfCards: cards.filter(card => card.deck === deck).length + 1
       }
     }));
   }
@@ -77,10 +77,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ cards }) => {
-  return {
-    cards
-  };
-};
+const mapStateToProps = ({ cards }) => ({cards});
 
 export default connect(mapStateToProps, deckActions)(AddCard);

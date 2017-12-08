@@ -12,13 +12,21 @@ class Quiz extends Component {
     isFlipped: false,
     score: 0,
     currentAnswer: null,
-    displayResult: false
+    displayResult: false,
+    selectedCards: null
+  }
+
+  componentWillMount() {
+    const { navigation } = this.props;
+    const { deck } = navigation.state.params;
+    const { cards } = this.props;
+    this.setState({selectedCards: cards.filter(card => card.deck === deck)});
   }
 
   componentWillUpdate() {
     const { currentAnswer, index } = this.state;
-    const { cards } = this.props;
-    currentAnswer || this.getRandomAnswer(cards[index].answer, cards.map(card => card.answer));
+    const { selectedCards } = this.state;
+    currentAnswer || this.getRandomAnswer(selectedCards[index].answer, selectedCards.map(card => card.answer));
   }
 
   flip = () => {
@@ -27,7 +35,15 @@ class Quiz extends Component {
 
   finish = () => {
     const { navigation } = this.props;
-    navigation.dispatch(NavigationActions.navigate({routeName: 'DeckList'}));
+    const { selectedCards } = this.state;
+    const { deck } = navigation.state.params;
+    navigation.dispatch(NavigationActions.navigate({
+      routeName: 'Deck',
+      params: {
+        title: deck,
+        numberOfCards: selectedCards.length
+      }
+    }));
   }
 
   restart = () => {
@@ -41,10 +57,9 @@ class Quiz extends Component {
   }
 
   submitAnswer = (isCorrect) => {
-    const { index, score } = this.state;
-    const { cards } = this.props;
+    const { index, score, selectedCards } = this.state;
 
-    index < cards.length - 1
+    index < selectedCards.length - 1
       ? this.setState({index: index + 1, isFlipped: false})
       : this.setState({displayResult: true})
 
@@ -63,44 +78,43 @@ class Quiz extends Component {
   }
 
   render() {
-    const { index, isFlipped, currentAnswer, displayResult, score } = this.state;
-    const { cards } = this.props;
+    const { index, isFlipped, currentAnswer, displayResult, score, selectedCards } = this.state;
 
     return (displayResult
       ? (<View style={styles.container}>
           <Text style={styles.resultText}>Congratulations, you have finished, your score is:</Text>
-          <Text style={styles.resultTextScore}>{score}/{cards.length}</Text>
+          <Text style={styles.resultTextScore}>{score}/{selectedCards.length}</Text>
           <View style={styles.btnContainer}>
             <ActionBtn
               onSubmit={this.restart}
-              text='  Restart  '
+              text='Restart Quiz'
             />
             <ActionBtn
               onSubmit={this.finish}
-              text='Finish Quiz'
+              text='Back to Deck'
             />
           </View>
         </View>)
       : (<View style={styles.container}>
-          <Text>{index + 1}/{cards.length}</Text>
+          <Text>{index + 1}/{selectedCards.length}</Text>
           {isFlipped
             ? <Card
                 cardText={currentAnswer}
                 actionText='Question'
                 onAction={this.flip}/>
             : <Card
-                cardText={cards[index].question}
+                cardText={selectedCards[index].question}
                 actionText='Answer'
                 onAction={this.flip}/>
           }
           <View style={styles.btnContainer}>
             <ActionBtn
-              onSubmit={this.submitAnswer.bind(this, cards[index].answer === currentAnswer)}
+              onSubmit={this.submitAnswer.bind(this, selectedCards[index].answer === currentAnswer)}
               text=' Correct '
               color={green}
             />
             <ActionBtn
-              onSubmit={this.submitAnswer.bind(this, cards[index].answer !== currentAnswer)}
+              onSubmit={this.submitAnswer.bind(this, selectedCards[index].answer !== currentAnswer)}
               text='Incorrect'
               color={red}
             />
@@ -135,10 +149,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ cards }) => {
-  return {
-    cards
-  };
-};
+const mapStateToProps = ({ cards }) => ({ cards });
 
 export default connect(mapStateToProps)(Quiz);

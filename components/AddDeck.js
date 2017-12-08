@@ -22,7 +22,7 @@ class AddDeck extends Component {
     navigation.dispatch(NavigationActions.navigate({
       routeName: 'Deck',
       params: {
-        text,
+        title: text,
         numberOfCards: 0
       }
     }));
@@ -81,10 +81,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ decks }) => {
-  return {
-    decks
-  };
-};
+const mapStateToProps = ({ decks }) => ({decks});
 
 export default connect(mapStateToProps, deckActions)(AddDeck);

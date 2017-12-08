@@ -12,6 +12,10 @@ class Card extends Component {
     animatedValue: new Animated.Value(0)
   }
 
+  componentWillUnmount() {
+    this.state.animatedValue.removeAllListeners()
+  }
+
   handleAction = () => {
     Animated.spring(this.state.animatedValue, {
       toValue: 0,

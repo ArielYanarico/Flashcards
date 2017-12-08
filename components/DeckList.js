@@ -70,11 +70,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ decks, cards }) => {
-  return {
-    decks,
-    cards
-  };
-};
+const mapStateToProps = ({ decks, cards }) => ({decks, cards});
 
 export default connect(mapStateToProps, {...deckActions, ...cardActions})(DeckList);
